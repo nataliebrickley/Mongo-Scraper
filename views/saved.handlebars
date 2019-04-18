@@ -1,7 +1,6 @@
-<!--Articles-->
 <div class="articles row">
   
-  {{#each articles}}
+  {{#each saved}}
   <div class="card bg-dark text-white col-md-6">
     <img src={{this.image}} class="card-img" alt="article image">
     <div class="card-img-overlay">
@@ -10,13 +9,13 @@
       </a>
       <p class="card-text">{{this.summary}}</p>
       <button 
-        class="btn save" 
+        class="btn delete-one" 
         data-image={{this.image}}
         data-title={{this.title}} 
         data-link={{this.link}}
         data-summary={{this.summary}}
         data-id={{this._id}}
-        >Save Article</button>
+        >Delete Article</button>
     </div>
   </div>
   {{/each}}

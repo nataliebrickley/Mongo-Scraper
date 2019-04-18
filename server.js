@@ -19,6 +19,7 @@ app.set("view engine", "handlebars");
 mongoose.connect("mongodb://localhost/mongoScraper", { useNewUrlParser: true, useCreateIndex: true });
 
 //Routes
+//get articles for homepage
 app.get("/", (req, res) => {
     db.Article
         .find({})
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 
 
 });
+//scrape articles
 app.get("/scrape", (req, res) => {
     axios.get("https://www.nytimes.com/section/science")
         .then(response => {
@@ -39,12 +41,14 @@ app.get("/scrape", (req, res) => {
                 let summary = $(element).find("p").first().text()
                 let url = $(element).find("h2").find("a").attr("href")
                 let link = "https://nytimes.com" + url;
+                let image = $(element).find("a").find("img").attr("src")
                 let post = {
                     title: title,
                     summary: summary,
-                    link: link
+                    link: link,
+                    image: image
                 }
-                //console.log(post)
+                console.log(post.image)
                 db.Article
                     .create(post)
                     .then(dbArticle => { console.log(dbArticle) })
@@ -53,6 +57,7 @@ app.get("/scrape", (req, res) => {
         })
     res.send("scraped data")
 })
+//post a comment
 app.post("/api/:articleId/comments", (req, res) => {
     db.Comments
         .create({ body: req.body.body })
@@ -62,8 +67,28 @@ app.post("/api/:articleId/comments", (req, res) => {
         .then(() => res.redirect("/"))
         .catch(err => res.json(err))
 })
+//delete all unsaved articles
+app.delete("/api/delete", (req, res) => {
+    // db.Article
+    //   .drop()
+})
+//save an article
+app.post("/articles/:articleId", (req, res) => {
+    db.Article
+      .findOneAndUpdate({_id: req.params.articleId}, {saved: true}, {new: true})
+      .then(() => console.log(res))
+      })
+//show saved articles on saved page
+app.get("/saved", (req, res) => {
+    db.Article
+      .find({saved: true})
+      .then(dbArticles => res.render("saved", {saved: dbArticles}))
+})
+      
 
 //Listen to port
 app.listen(PORT, () => {
     console.log(`App running on port http://localhost:${PORT}`);
 });
+
+

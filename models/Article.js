@@ -15,6 +15,13 @@ const ArticleSchema = new Schema ({
         required: true,
         unique: true
     },
+    image: {
+        type: String
+    },
+    saved: {
+        type: Boolean,
+        default: false
+    },
     comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comments"
