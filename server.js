@@ -37,7 +37,8 @@ app.get("/scrape", (req, res) => {
             $("article").each(function(i, element){
                 let title = $(element).find("h2").find("a").text()
                 let summary = $(element).find("p").first().text()
-                let link = $(element).find("h2").find("a").attr("href")
+                let url = $(element).find("h2").find("a").attr("href")
+                let link = "https://nytimes.com" + url;
                 let post = {
                     title: title,
                     summary: summary,
