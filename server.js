@@ -11,10 +11,25 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+//Handlebars
+const exphbs = require("express-handlebars");
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 //Connect to MongoDB
 mongoose.connect("mongodb://localhost/mongoScraper", { useNewUrlParser: true, useCreateIndex: true });
 
 //Routes
+app.get("/", (req, res) => {
+    db.Article
+      .find({})
+    //   .then(dbArticles => res.render("home", {articles: dbArticles}))
+    .then(dbArticles => {
+        // res.json(dbArticles);
+        res.render("home", {articles: dbArticles});
+    })
+
+
+});
 app.get("/scrape", (req, res) => {
     axios.get("https://www.nytimes.com/section/science")
          .then(response => {
@@ -28,9 +43,14 @@ app.get("/scrape", (req, res) => {
                     summary: summary,
                     link: link
                 }
-                console.log("link: " + post.link)
+                //console.log(post)
+                db.Article
+                  .create(post)
+                  .then(dbArticle => {console.log(dbArticle)})
+                  .catch(err => console.log(err))
             })
          })
+         res.send("scraped data")
 })
 
 
