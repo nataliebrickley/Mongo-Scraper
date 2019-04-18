@@ -5,5 +5,14 @@
         <h2>{{this.title}}</h2>
     </a>
     <p>{{this.summary}}</p>
+    <h4>Comments</h4>
+    {{#each this.comments}}
+    <p>{{this.body}}</p>
+    <p>{{this.created}}</p>
+    {{/each}}
+    <form action="/api/{{this._id}}/comments" method="POST">
+        <textarea name="body"></textarea>
+        <button type="submit">Submit Comment</button>
+    </form>
     {{/each}}
 </div>

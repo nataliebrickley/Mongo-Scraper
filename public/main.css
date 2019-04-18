@@ -1,0 +1,9 @@
+.home-image {
+    background: url("https://cdn.pixabay.com/photo/2016/11/29/13/17/breakfast-1869772_1280.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+.home {
+    background: linear-gradient(#333, black)
+}

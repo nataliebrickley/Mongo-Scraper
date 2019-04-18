@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const CommentsSchema = new Schema ({
     body: {
-        type: String
+        type: String,
+        required: true
     },
     created: {
         type: Date,

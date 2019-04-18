@@ -21,20 +21,20 @@ mongoose.connect("mongodb://localhost/mongoScraper", { useNewUrlParser: true, us
 //Routes
 app.get("/", (req, res) => {
     db.Article
-      .find({})
-    //   .then(dbArticles => res.render("home", {articles: dbArticles}))
-    .then(dbArticles => {
-        // res.json(dbArticles);
-        res.render("home", {articles: dbArticles});
-    })
+        .find({})
+        .populate("comments")
+        .then(dbArticles => {
+            // res.json(dbArticles);
+            res.render("home", { articles: dbArticles });
+        })
 
 
 });
 app.get("/scrape", (req, res) => {
     axios.get("https://www.nytimes.com/section/science")
-         .then(response => {
+        .then(response => {
             const $ = cheerio.load(response.data);
-            $("article").each(function(i, element){
+            $("article").each(function (i, element) {
                 let title = $(element).find("h2").find("a").text()
                 let summary = $(element).find("p").first().text()
                 let url = $(element).find("h2").find("a").attr("href")
@@ -46,14 +46,22 @@ app.get("/scrape", (req, res) => {
                 }
                 //console.log(post)
                 db.Article
-                  .create(post)
-                  .then(dbArticle => {console.log(dbArticle)})
-                  .catch(err => console.log(err))
+                    .create(post)
+                    .then(dbArticle => { console.log(dbArticle) })
+                    .catch(err => console.log(err))
             })
-         })
-         res.send("scraped data")
+        })
+    res.send("scraped data")
 })
-
+app.post("/api/:articleId/comments", (req, res) => {
+    db.Comments
+        .create({ body: req.body.body })
+        .then(dbComments => {
+            return db.Article.findOneAndUpdate({ _id: req.params.articleId }, { $push: { comments: dbComments._id } }, { new: true })
+        })
+        .then(() => res.redirect("/"))
+        .catch(err => res.json(err))
+})
 
 //Listen to port
 app.listen(PORT, () => {
