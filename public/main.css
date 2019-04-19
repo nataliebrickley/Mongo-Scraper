@@ -1,3 +1,19 @@
+body {
+    background: rgb(7, 65, 36)
+}
+nav{
+    background: rgb(7, 65, 36);
+    height: 70px;
+}
+.scrape {
+    background: navy; 
+    margin-right: 5px;
+    color: #fff;
+}
+.clear {
+    background: rgb(141, 10, 10);
+    color: #fff
+}
 .home-image {
     /* background: url("https://cdn.pixabay.com/photo/2016/11/29/13/17/breakfast-1869772_1280.jpg"); */
     background: url("https://cdn.pixabay.com/photo/2015/11/19/21/11/knowledge-1052011__480.jpg");
@@ -5,6 +21,12 @@
     background-repeat: no-repeat;
     height: 100vh;
     box-shadow: 0 3000px rgba(0, 0, 0, 0.4) inset;
+    color: white;
+    text-align: center;
+}
+.home-title {
+    font-size: 90px;
+    padding-top: 25vh;
 }
 .col-md-6 {
     padding-right:0;
@@ -13,9 +35,23 @@
 a {
     color: white;
 }
-p {
+p.card-text {
     text-shadow: 1px 1px black;
 }
 .save {
     background: lightgoldenrodyellow;
+}
+.comment {
+    background: lightseagreen
+}
+.modal-body, .modal-header {
+    color: black
+}
+.delete-one, .deleteComment {
+    background: red;
+    color: #fff
+}
+.row {
+    width: 100%;
+    margin: 0px;
 }

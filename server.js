@@ -22,11 +22,11 @@ mongoose.connect("mongodb://localhost/mongoScraper", { useNewUrlParser: true, us
 //get articles for homepage
 app.get("/", (req, res) => {
     db.Article
-        .find({})
+        .find({saved: false})
         .populate("comments")
         .then(dbArticles => {
-            // res.json(dbArticles);
-            res.render("home", { articles: dbArticles });
+            //console.log(dbComments)
+            res.render("home", { articles: dbArticles});
         })
 
 
@@ -57,7 +57,8 @@ app.get("/scrape", (req, res) => {
                     .catch(err => console.log(err))
             })
         })
-        res.redirect("/")
+        .then(res.redirect("/"))
+        
 })
 //post a comment
 app.post("/api/:articleId/comments", (req, res) => {
@@ -66,26 +67,41 @@ app.post("/api/:articleId/comments", (req, res) => {
         .then(dbComments => {
             return db.Article.findOneAndUpdate({ _id: req.params.articleId }, { $push: { comments: dbComments._id } }, { new: true })
         })
-        .then(() => res.redirect("/"))
+        .then(res.redirect("/"))
         .catch(err => res.json(err))
+})
+//delete a comment
+app.delete("/api/:commentsId/comments", (req, res) => {
+    db.Comments
+      .findOneAndDelete({_id: req.params.commentsId})
+      .then(() => res.render("/"))
 })
 //clear articles (saved articles should remain in the database)
 app.delete("/api/clear", (req, res) => {
     db.Article
-      .deleteMany({saved: false}, function(err, data) {
-          res.redirect("/")
+      .deleteMany({saved: false}, function() {
+          console.log("cleared")
       })
+      .then(res.redirect("/"))
 })
 //save an article
 app.post("/articles/:articleId", (req, res) => {
     db.Article
       .findOneAndUpdate({_id: req.params.articleId}, {saved: true}, {new: true})
-      .then(() => console.log(res))
+      .then(() => console.log("saved"))
+      .then(res.redirect("/"))
       })
+//delete a saved article
+app.delete("/articles/:articleId", (req, res) => {
+    db.Article
+      .findOneAndUpdate({_id: req.params.articleId}, {saved: false}, {new: true})
+      .then(() => res.render("saved"))
+})
 //show saved articles on saved page
 app.get("/saved", (req, res) => {
     db.Article
       .find({saved: true})
+      .populate("comments")
       .then(dbArticles => res.render("saved", {saved: dbArticles}))
 })
       
