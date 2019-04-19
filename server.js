@@ -51,11 +51,13 @@ app.get("/scrape", (req, res) => {
                 console.log(post.image)
                 db.Article
                     .create(post)
-                    .then(dbArticle => { console.log(dbArticle) })
+                    .then(dbArticle => { 
+                        console.log(dbArticle) 
+                    })
                     .catch(err => console.log(err))
             })
         })
-    res.send("scraped data")
+        res.redirect("/")
 })
 //post a comment
 app.post("/api/:articleId/comments", (req, res) => {
@@ -67,10 +69,12 @@ app.post("/api/:articleId/comments", (req, res) => {
         .then(() => res.redirect("/"))
         .catch(err => res.json(err))
 })
-//delete all unsaved articles
-app.delete("/api/delete", (req, res) => {
-    // db.Article
-    //   .drop()
+//clear articles (saved articles should remain in the database)
+app.delete("/api/clear", (req, res) => {
+    db.Article
+      .deleteMany({saved: false}, function(err, data) {
+          res.redirect("/")
+      })
 })
 //save an article
 app.post("/articles/:articleId", (req, res) => {
