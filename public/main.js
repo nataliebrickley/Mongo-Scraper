@@ -41,7 +41,3 @@ $(document).on("click", ".deleteComment", function(){
     })
 })
 
-//form submit
-$(document).on("submit", ".commentsForm", function(){
-    location.reload()
-})

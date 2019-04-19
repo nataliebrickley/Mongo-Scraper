@@ -16,7 +16,13 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 //Connect to MongoDB
-mongoose.connect("mongodb://localhost/mongoScraper", { useNewUrlParser: true, useCreateIndex: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoScraper";
+
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true}, (err) => {
+    if (err) throw err;
+    console.log("database connected")
+});
 
 //Routes
 //get articles for homepage
