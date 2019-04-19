@@ -87,14 +87,14 @@ app.get("/api/clear", (req, res) => {
 app.post("/articles/:articleId", (req, res) => {
     db.Article
       .findOneAndUpdate({_id: req.params.articleId}, {saved: true}, {new: true})
-      .then(() => console.log("saved"))
-      .then(res.redirect("/"))
+      .then((dbArticle) => res.json(dbArticle))
+    //   .then(()=>res.redirect("/"))
       })
 //delete a saved article
 app.delete("/articles/:articleId", (req, res) => {
     db.Article
       .findOneAndUpdate({_id: req.params.articleId}, {saved: false}, {new: true})
-      .then(() => res.render("saved"))
+      .then((dbArticle) => res.json(dbArticle))
 })
 //show saved articles on saved page
 app.get("/saved", (req, res) => {

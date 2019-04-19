@@ -1,11 +1,3 @@
-//Clear Articles (should not affect saved articles)
-// $(".clear").on("click", function() {
-//     console.log("clicked")
-//     $.ajax({
-//         method: "DELETE",
-//         url: "/api/clear"
-//     }).then(() => console.log("Cleared articles"))
-// })
 
 //Save an article
 $(document).on("click", ".save", function(){
@@ -18,6 +10,7 @@ $(document).on("click", ".save", function(){
         }
     }).then(function(data){
         console.log(data);
+        location.reload();
     })
 })
 
@@ -32,7 +25,7 @@ $(document).on("click", ".delete-one", function(){
             saved: false
         }
     }).then(function(data){
-        console.log(data);
+        location.reload();
     })
 })
 
@@ -46,4 +39,9 @@ $(document).on("click", ".deleteComment", function(){
     }).then(function(data){
         location.reload();
     })
+})
+
+//form submit
+$(document).on("submit", ".commentsForm", function(){
+    location.reload()
 })
