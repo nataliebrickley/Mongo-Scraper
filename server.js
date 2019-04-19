@@ -48,16 +48,14 @@ app.get("/scrape", (req, res) => {
                     link: link,
                     image: image
                 }
-                console.log(post.image)
                 db.Article
                     .create(post)
                     .then(dbArticle => { 
-                        console.log(dbArticle) 
                     })
                     .catch(err => console.log(err))
             })
         })
-        .then(res.redirect("/"))
+        .then(()=>res.redirect("/"))
         
 })
 //post a comment
@@ -67,22 +65,23 @@ app.post("/api/:articleId/comments", (req, res) => {
         .then(dbComments => {
             return db.Article.findOneAndUpdate({ _id: req.params.articleId }, { $push: { comments: dbComments._id } }, { new: true })
         })
-        .then(res.redirect("/"))
+        .then(()=>res.redirect("/"))
         .catch(err => res.json(err))
 })
 //delete a comment
 app.delete("/api/:commentsId/comments", (req, res) => {
     db.Comments
       .findOneAndDelete({_id: req.params.commentsId})
-      .then(() => res.render("/"))
+      .then(dbResult => res.json(dbResult))
 })
+
 //clear articles (saved articles should remain in the database)
-app.delete("/api/clear", (req, res) => {
+app.get("/api/clear", (req, res) => {
     db.Article
       .deleteMany({saved: false}, function() {
           console.log("cleared")
       })
-      .then(res.redirect("/"))
+      .then(() => res.redirect("/"))
 })
 //save an article
 app.post("/articles/:articleId", (req, res) => {
