@@ -41,9 +41,10 @@
                 <button class="btn deleteComment" data-id={{this._id}}>X</button>
               </p>
               {{/each}}
-              <form action="/api/{{this._id}}/comments" method="POST" class="commentsForm">
-                <textarea name="body" placeholder="Make a comment..."></textarea>
-                <button type="submit" class="btn btn-primary submit">Submit Comment</button>
+              {{!-- <form action="/api/{{this._id}}/comments" method="POST" class="commentsForm"> --}}
+              <form class="commentsForm" data-id={{this._id}}>
+                <textarea name="body" id="comment-{{this._id}}" placeholder="Make a comment..."></textarea>
+                <button type="submit" class="btn btn-primary submit" data-id={{this._id}}>Submit Comment</button>
               </form>
             </div>
             <div class="modal-footer">

@@ -66,12 +66,14 @@ app.get("/scrape", (req, res) => {
 })
 //post a comment
 app.post("/api/:articleId/comments", (req, res) => {
+    console.log(req.body)
     db.Comments
         .create({ body: req.body.body })
         .then(dbComments => {
+            console.log("commented")
             return db.Article.findOneAndUpdate({ _id: req.params.articleId }, { $push: { comments: dbComments._id } }, { new: true })
         })
-        .then(()=>res.redirect("/"))
+        .then((dbComments)=>res.render("/saved"))
         .catch(err => res.json(err))
 })
 //delete a comment

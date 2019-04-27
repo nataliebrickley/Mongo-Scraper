@@ -41,3 +41,20 @@ $(document).on("click", ".deleteComment", function(){
     })
 })
 
+//post a comment
+$(document).on("click", ".submit", function() {
+    event.preventDefault();
+    let id= $(this).attr("data-id");
+    let text=$("#comment-" + id).val()
+    console.log(text)
+    $.ajax({
+        method: "POST",
+        url: `/api/${id}/comments`,
+        data: {
+            body: text
+        }
+    }).then(function(data) {
+        console.log(data)
+        location.reload()
+    })
+})

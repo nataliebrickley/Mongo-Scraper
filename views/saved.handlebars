@@ -37,7 +37,7 @@
               </p>
               {{/each}}
               <form action="/api/{{this._id}}/comments" method="POST">
-                <textarea name="body" placeholder="Make a comment..."></textarea>
+                <textarea id="comment-{{this._id}}" name="body" placeholder="Make a comment..."></textarea>
                 <button type="submit" class="btn btn-primary">Submit Comment</button>
               </form>
             </div>

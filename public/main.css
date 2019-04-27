@@ -16,7 +16,8 @@ nav{
 }
 .home-image {
     /* background: url("https://cdn.pixabay.com/photo/2016/11/29/13/17/breakfast-1869772_1280.jpg"); */
-    background: url("https://cdn.pixabay.com/photo/2015/11/19/21/11/knowledge-1052011__480.jpg");
+    background: url("./news.jpg");
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
