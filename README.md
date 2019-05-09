@@ -13,3 +13,5 @@ Mongo-Scraper utilizes Mongoose and Cheerio to scrape news from the New York Tim
 5. Delete Comments
     +  Users can delete a comment by clicking on the red *X* button that appears next to the comment.  
     [![Image from Gyazo](https://i.gyazo.com/005cfd675df07534f8c0cc48bdf92344.gif)](https://gyazo.com/005cfd675df07534f8c0cc48bdf92344)
+## Technlogies Used
+The technologies used to create this application include: MongoDB, Node, Express, Handlebars, Cheerio, Axios    
