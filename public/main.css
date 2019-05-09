@@ -15,7 +15,6 @@ nav{
     color: #fff
 }
 .home-image {
-    /* background: url("https://cdn.pixabay.com/photo/2016/11/29/13/17/breakfast-1869772_1280.jpg"); */
     background: url("./news.jpg");
     background-position: center;
     background-size: cover;

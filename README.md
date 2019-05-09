@@ -1,4 +1,5 @@
 # Mongo-Scraper
+## Deployed Site: https://mongoscraper-nytimes.herokuapp.com/
 Mongo-Scraper utilizes Mongoose and Cheerio to scrape news from the New York Times Science section. The app lets users view and leave comments on the latest science news.
 1. Scrape Articles
     + Users can scrape the latest articles by clicking on the *Scrape Articles* button, located in the navbar.
