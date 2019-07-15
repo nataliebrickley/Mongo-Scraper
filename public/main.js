@@ -54,7 +54,7 @@ $(document).on("click", ".submit", function() {
             body: text
         }
     }).then(function(data) {
-        console.log(data)
-        location.reload()
+        console.log("worked")
+        location.reload();
     })
 })

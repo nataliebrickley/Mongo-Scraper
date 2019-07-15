@@ -73,7 +73,7 @@ app.post("/api/:articleId/comments", (req, res) => {
             console.log("commented")
             return db.Article.findOneAndUpdate({ _id: req.params.articleId }, { $push: { comments: dbComments._id } }, { new: true })
         })
-        .then((dbComments)=>res.render("/saved"))
+        .then((dbComments)=>res.render("saved"))
         .catch(err => res.json(err))
 })
 //delete a comment
